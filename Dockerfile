@@ -32,13 +32,25 @@ ARG arch=uno
 RUN apt-get update
 RUN apt-get -y install arduino
 RUN apt-get -y install arduino-core
+RUN apt-get -y install libusb-dev
 RUN apt-get -y install build-essential
+RUN apt-get -y install git
 RUN apt-get -y install python
 RUN apt-get -y install python-pip
 RUN pip install ino
 
+RUN ino list-models
+
+# install the teensy cli tool
+RUN git clone https://github.com/PaulStoffregen/teensy_loader_cli.git
+WORKDIR /teensy_loader_cli
+RUN make
+RUN mv teensy_loader_cli /usr/local/bin/teensy_loader_cli
+RUN teensy_loader_cli --list-mcus; exit 0
+
 # enter arduino directory
 WORKDIR /arduino
+#RUN ls /usr/share/arduino
 # init the directory 
 RUN ino init
 
@@ -49,6 +61,10 @@ RUN rm -rf /arduino/src
 # copy all libraries and source files
 COPY src/ /arduino/src/
 COPY lib/ /arduino/lib/
+#COPY teensy.tar.gz /usr/share/arduino/hardware
+#WORKDIR /usr/share/arduino/hardware
+#RUN tar xzvf teensy.tar.gz
+#WORKDIR /arduino
 
 # build the sketch
 RUN ino build -m $arch
