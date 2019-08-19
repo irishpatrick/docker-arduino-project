@@ -42,6 +42,10 @@ WORKDIR /arduino
 # init the directory 
 RUN ino init
 
+# clean directories before copying
+RUN rm -rf /arduino/src
+#RUN rm -rf /arduino/lib
+
 # copy all libraries and source files
 COPY src/ /arduino/src/
 COPY lib/ /arduino/lib/
