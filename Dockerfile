@@ -2,6 +2,8 @@ FROM ubuntu:14.04
 
 MAINTAINER Patrick Roche
 
+ARG arch=uno
+
 RUN apt-get update
 
 RUN apt-get -y install arduino
@@ -16,4 +18,4 @@ RUN ino init
 
 COPY src/ /arduino/src/
 COPY lib/ /arduino/lib/
-RUN ino build -m mega2560
+RUN ino build -m $arch

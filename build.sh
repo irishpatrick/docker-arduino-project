@@ -2,9 +2,11 @@
 
 if [ -z $1 ]
 then
-    echo "Please specify the docker container."
+    echo "Please specify the architecture."
     exit 1
 fi
 
-docker build -t $1 .
+tag="${PWD##*/}-$1"
+
+docker build . -t $tag --build-arg arch=$1
 
