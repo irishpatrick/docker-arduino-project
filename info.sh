@@ -36,5 +36,5 @@ tag="${PWD##*/}-$1"
 
 # list info
 docker run --privileged $tag ino list-models
-docker run --privileged $tag teensy_loader_cli --list-mcus
-docker run --privileged $tag stat /arduino/.build/$1/firmware.hex
+#docker run --privileged $tag teensy_loader_cli --list-mcus
+#docker run --privileged $tag stat /arduino/.build/$1/firmware.hex
